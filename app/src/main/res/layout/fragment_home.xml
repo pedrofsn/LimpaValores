@@ -13,29 +13,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#E0E0E0"
         android:orientation="vertical"
         tools:context=".ui.home.HomeFragment">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:paddingTop="20dp">
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/textViewResult"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@{viewModel.textUnformatted}"
+                    android:textSize="15sp"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toStartOf="@id/imageViewCopy"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@tools:sample/full_names" />
+
+                <ImageView
+                    android:id="@+id/imageViewCopy"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_content_copy"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:hint="@string/input_barcode"
-                    app:layout_constraintEnd_toStartOf="@+id/imageViewPaste"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@+id/textViewResult">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textInputEditText"
@@ -48,42 +73,26 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:layout_width="0dp"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonPaste"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:text="@{viewModel.textUnformatted}"
-                    android:textSize="15sp"
-                    android:textStyle="italic"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:drawableEnd="@drawable/ic_content_paste"
+                    android:text="@string/paste"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textInputLayout"
-                    tools:text="@tools:sample/full_names" />
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-                <ImageView
-                    android:id="@+id/imageViewPaste"
-                    android:layout_width="24dp"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonFire"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:contentDescription="@string/paste"
-                    android:src="@drawable/ic_content_paste"
-                    app:layout_constraintBottom_toBottomOf="@id/textInputLayout"
-                    app:layout_constraintEnd_toStartOf="@id/imageViewUnformat"
-                    app:layout_constraintTop_toTopOf="@id/textInputLayout" />
-
-                <ImageView
-                    android:id="@+id/imageViewUnformat"
-                    android:layout_width="24dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorAccent"
-                    android:contentDescription="@string/paste"
+                    android:drawableEnd="@drawable/ic_whatshot"
                     android:onClick="@{() -> viewModel.clearText()}"
-                    android:src="@drawable/ic_whatshot"
-                    app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+                    android:text="@string/call_to_action"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textInputLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,11 +1,13 @@
 package br.com.redcode.limpavalores.ui.home
 
+import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import br.com.redcode.limpavalores.BR
@@ -14,12 +16,14 @@ import br.com.redcode.limpavalores.R
 import br.com.redcode.limpavalores.databinding.FragmentHomeBinding
 import br.com.redcode.limpavalores.domain.getBinding
 import br.com.redcode.limpavalores.domain.setupMVVM
+import com.google.android.material.button.MaterialButton
 
 class HomeFragment : Fragment(), ClipboardManager.OnPrimaryClipChangedListener {
 
     private val viewModel by lazy { ViewModelProvider(this).get(HomeViewModel::class.java) }
 
-    private val imageViewPaste by lazy { view?.findViewById<ImageView>(R.id.imageViewPaste) }
+    private val buttonPaste by lazy { view?.findViewById<MaterialButton>(R.id.buttonPaste) }
+    private val imageViewCopy by lazy { view?.findViewById<ImageView>(R.id.imageViewCopy) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +37,22 @@ class HomeFragment : Fragment(), ClipboardManager.OnPrimaryClipChangedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imageViewPaste?.setOnClickListener { pasteText() }
+        buttonPaste?.setOnClickListener { pasteText() }
+        imageViewCopy?.setOnClickListener { copyClaredText() }
+    }
+
+    private fun copyClaredText() {
+        viewModel.textUnformatted.value
+            ?.takeIf { it.isNotBlank() }
+            ?.let { ClipData.newPlainText(getString(R.string.app_name), it) }
+            ?.run { getClipboardManager()?.setPrimaryClip(this) }
+            ?.also {
+                Toast.makeText(
+                    activity,
+                    "Copiado para área de transferência",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 
     private fun getClipboardManager() = (activity as MainActivity).clipboardManager

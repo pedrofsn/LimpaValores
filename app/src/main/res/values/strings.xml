@@ -5,4 +5,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="paste">Colar</string>
     <string name="input_barcode">Digite o código de barras</string>
+    <string name="call_to_action">Limpar formatação</string>
 </resources>

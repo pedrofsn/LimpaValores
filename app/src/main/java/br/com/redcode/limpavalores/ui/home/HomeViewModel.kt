@@ -1,13 +1,21 @@
 package br.com.redcode.limpavalores.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
+    val input = MutableLiveData<String>()
+    val textUnformatted = MutableLiveData<String>()
+    val hasContentToPasteFromClipboard = MutableLiveData<Boolean>()
+
+    fun clearText() = input.value
+        ?.takeIf { it.isNotBlank() }
+        ?.run {
+            replace(" ", "")
+            val regex = Regex("[^0-9?!.]")
+            val unformatted = replace(regex, "")
+            textUnformatted.postValue(unformatted)
+        }
+
 }

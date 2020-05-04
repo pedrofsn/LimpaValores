@@ -8,6 +8,8 @@
         <variable
             name="viewModel"
             type="br.com.redcode.limpavalores.ui.home.HomeViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <LinearLayout
@@ -39,6 +41,7 @@
                     android:text="@{viewModel.textUnformatted}"
                     android:textSize="15sp"
                     android:textStyle="italic"
+                    android:visibility="@{viewModel.hasTextUnformatted ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toStartOf="@id/imageViewCopy"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -49,8 +52,10 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_content_copy"
+                    android:visibility="@{viewModel.hasTextUnformatted ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewResult"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/textViewResult" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayout"

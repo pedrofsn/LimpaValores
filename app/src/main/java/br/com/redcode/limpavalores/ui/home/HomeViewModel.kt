@@ -7,7 +7,9 @@ class HomeViewModel : ViewModel() {
 
     val input = MutableLiveData<String>()
     val textUnformatted = MutableLiveData<String>()
-    val hasContentToPasteFromClipboard = MutableLiveData<Boolean>()
+
+    val hasTextUnformatted = MutableLiveData(false)
+    val hasContentToPasteFromClipboard = MutableLiveData(false)
 
     fun clearText() = input.value
         ?.takeIf { it.isNotBlank() }
@@ -15,7 +17,10 @@ class HomeViewModel : ViewModel() {
             replace(" ", "")
             val regex = Regex("[^0-9?!.]")
             val unformatted = replace(regex, "")
-            textUnformatted.postValue(unformatted)
+            val hasText = unformatted.isNotBlank()
+
+            hasTextUnformatted.postValue(hasText)
+            takeIf { hasText }?.also { textUnformatted.postValue(unformatted) }
         }
 
 }

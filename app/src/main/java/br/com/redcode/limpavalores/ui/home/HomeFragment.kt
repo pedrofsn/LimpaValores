@@ -17,12 +17,16 @@ import br.com.redcode.limpavalores.R
 import br.com.redcode.limpavalores.databinding.FragmentHomeBinding
 import br.com.redcode.limpavalores.domain.getBinding
 import br.com.redcode.limpavalores.domain.setupMVVM
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.button.MaterialButton
 
 class HomeFragment : Fragment(), ClipboardManager.OnPrimaryClipChangedListener {
 
     private val viewModel by lazy { ViewModelProvider(this).get(HomeViewModel::class.java) }
 
+    private val adView by lazy { view?.findViewById<AdView>(R.id.adView) }
     private val buttonPaste by lazy { view?.findViewById<MaterialButton>(R.id.buttonPaste) }
     private val imageViewCopy by lazy { view?.findViewById<ImageView>(R.id.imageViewCopy) }
 
@@ -40,8 +44,27 @@ class HomeFragment : Fragment(), ClipboardManager.OnPrimaryClipChangedListener {
         super.onViewCreated(view, savedInstanceState)
         buttonPaste?.setOnClickListener { pasteText() }
         imageViewCopy?.setOnClickListener { copyClaredText() }
+        handleAds()
 
         Handler().postDelayed({ onPrimaryClipChanged() }, 1_000)
+    }
+
+    private fun handleAds() {
+        val adRequest = AdRequest.Builder()
+            .build()
+
+        adView?.loadAd(adRequest)
+        adView?.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                viewModel.showAds.postValue(true)
+            }
+
+            override fun onAdClosed() {
+                super.onAdClosed()
+                viewModel.showAds.postValue(false)
+            }
+        }
     }
 
     private fun copyClaredText() {

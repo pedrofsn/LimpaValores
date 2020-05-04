@@ -20,6 +20,27 @@
         tools:context=".ui.home.HomeFragment">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewAd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:visibility="@{viewModel.showAds ? View.VISIBLE : View.GONE}"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="8dp"
+            app:contentPadding="10dp">
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                app:adSize="BANNER"
+                app:adUnitId="@string/banner_1" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

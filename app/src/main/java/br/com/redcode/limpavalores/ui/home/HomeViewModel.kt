@@ -10,6 +10,7 @@ class HomeViewModel : ViewModel() {
 
     val hasTextUnformatted = MutableLiveData(false)
     val hasContentToPasteFromClipboard = MutableLiveData(false)
+    val showAds = MutableLiveData(false)
 
     fun clearText() = input.value
         ?.takeIf { it.isNotBlank() }

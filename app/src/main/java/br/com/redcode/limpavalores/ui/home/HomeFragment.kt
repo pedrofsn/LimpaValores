@@ -3,6 +3,7 @@ package br.com.redcode.limpavalores.ui.home
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,8 @@ class HomeFragment : Fragment(), ClipboardManager.OnPrimaryClipChangedListener {
         super.onViewCreated(view, savedInstanceState)
         buttonPaste?.setOnClickListener { pasteText() }
         imageViewCopy?.setOnClickListener { copyClaredText() }
+
+        Handler().postDelayed({ onPrimaryClipChanged() }, 1_000)
     }
 
     private fun copyClaredText() {
